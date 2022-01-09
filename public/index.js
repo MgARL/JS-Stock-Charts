@@ -71,8 +71,6 @@ async function main() {
     });
 }
 
-
-
 function getColor(stock){
     if(stock === "GME"){
         return 'rgba(61, 161, 61, 0.7)'
@@ -141,14 +139,6 @@ main()
 //     });
 
 //     return simpleDateArray
-
-// let highestValue = highValue[0];
-        // console.log(highestValue)
-        // highValue.foreach(value => {
-        //     if (value > highestValue){
-        //         highestValue = value;
-        //     }
-        //  })
 
 // }
 // API end points https://api.twelvedata.com/
