@@ -10,8 +10,6 @@ async function main() {
     const {GME, MSFT, DIS, BNTX } = result;
 
     const stocks = [GME, MSFT, DIS, BNTX];
-    console.log(stocks)//Remove When Finished
-
 
 
     new Chart(timeChartCanvas.getContext('2d'), {
@@ -35,21 +33,45 @@ async function main() {
                 label: 'Highest',
                 data: getHighestValue(stocks),
                 backgroundColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(61, 161, 61, 0.7)',
+                    'rgba(209, 4, 25, 0.7)',
+                    'rgba(166, 43, 158, 0.7)',
+                    'rgba(255, 159, 64, 1)',
                 ],
                 borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
+                    'rgba(61, 161, 61, 0.7)',
+                    'rgba(209, 4, 25, 0.7)',
+                    'rgba(166, 43, 158, 0.7)',
+                    'rgba(255, 159, 64, 1)',
+                ]
+            }]
+        },
+    });
+
+    new Chart(averagePriceChartCanvas.getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: stocks.map( stock => stock.meta.symbol),
+            datasets: [{
+                data: getAveragePrice(stocks),
+                backgroundColor: [
+                    'rgba(61, 161, 61, 0.7)',
+                    'rgba(209, 4, 25, 0.7)',
+                    'rgba(166, 43, 158, 0.7)',
+                    'rgba(255, 159, 64, 1)',
+                ],
+                borderColor: [
+                    'rgba(61, 161, 61, 0.7)',
+                    'rgba(209, 4, 25, 0.7)',
+                    'rgba(166, 43, 158, 0.7)',
+                    'rgba(255, 159, 64, 1)',
                 ]
             }]
         },
     });
 }
+
+
 
 function getColor(stock){
     if(stock === "GME"){
@@ -59,10 +81,10 @@ function getColor(stock){
         return 'rgba(209, 4, 25, 0.7)'
     }
     if(stock === "DIS"){
-        return 'rgba(18, 4, 209, 0.7)'
+        return 'rgba(166, 43, 158, 0.7)'
     }
     if(stock === "BNTX"){
-        return 'rgba(166, 43, 158, 0.7)'
+        return 'rgba(255, 159, 64, 1)'
     }
 }
 
@@ -77,9 +99,28 @@ function getHighestValue(stocks){
                 highestVal = value.high
             }    
         })
-        highestValuesArray.push(highestVal)
+        highestVal = (Math.floor(highestVal * 100)) / 100;
+        highestValuesArray.push(highestVal);
     })
     return highestValuesArray;
+}
+
+function getAveragePrice(stocks){
+    averageMonthlyArr = [];
+    stocks.map( stock =>{
+        let valArray = stock.values
+        let averageSum = 0;
+        valArray.map(value => {
+            let averageDailyPrice = (parseFloat(value.high) + parseFloat(value.low)) / 2;
+            averageSum = averageSum + averageDailyPrice;
+
+        })
+
+        let averageMonthly = (Math.floor((averageSum / valArray.length) * 100))/100;
+
+        averageMonthlyArr.push(averageMonthly);
+    })
+    return averageMonthlyArr;
 }
 
 main()
