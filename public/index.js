@@ -84,7 +84,7 @@ function getHighestValue(stocks){
 
 main()
 
-
+//EXTRA code that I thought I needed but didn't really use
 //Remove time stamps from minute intervals only leaving the date.
 // function getDate(stock0){
 //     let fullDateArray = stock0.values.map(value => value.datetime);
@@ -111,4 +111,4 @@ main()
 
 // }
 // API end points https://api.twelvedata.com/
-// 9c653000c19841e78e77259e84cea4c1 &interval=1day
+//&interval=1day
